@@ -1,5 +1,5 @@
 {
-  "name": "@vef/easy-api",
+  "name": "@eveffer/easyapi",
   "version": "0.1.1",
   "description": "Easy API",
   "module": "lib/index.js",
