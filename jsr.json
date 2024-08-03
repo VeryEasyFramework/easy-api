@@ -1,0 +1,11 @@
+{
+  "name": "@vef/easy-api",
+  "version": "0.1.0",
+  "exports": "./lib/index.js",
+  "publish": {
+    "exclude": [
+      ".github",
+      "src"
+    ]
+  }
+}
