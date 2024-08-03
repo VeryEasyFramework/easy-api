@@ -1,6 +1,6 @@
 {
   "name": "@eveffer/easyapi",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Easy API",
   "module": "lib/index.js",
   "main": "lib/index.js",
@@ -9,8 +9,7 @@
     "lib"
   ],
   "scripts": {
-    "build": "rm -rf lib && npx tsc",
-    "publish": "npm run build && npm publish"
+    "build": "rm -rf lib && npx tsc"
   },
   "author": "",
   "license": "MIT",
