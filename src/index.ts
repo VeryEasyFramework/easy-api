@@ -1,0 +1,1 @@
+export { EasyApi } from "./easyApi";
