@@ -1,0 +1,14 @@
+{
+  "name": "@eveffer/easyapi",
+  "version": "1.0.0",
+  "description": "Easy API",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.5.4"
+  }
+}
