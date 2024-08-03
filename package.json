@@ -1,11 +1,11 @@
 {
   "name": "@eveffer/easyapi",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Easy API",
   "module": "index.ts",
   "files": [
     "src",
-    "index.d.ts"
+    "index.ts"
   ],
   "scripts": {
     "build": "rm -rf lib && npx tsc"
