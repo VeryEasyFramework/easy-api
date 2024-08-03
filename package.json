@@ -2,11 +2,10 @@
   "name": "@eveffer/easyapi",
   "version": "0.1.5",
   "description": "Easy API",
-  "module": "lib/index.js",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "module": "index.ts",
   "files": [
-    "lib"
+    "src",
+    "index.d.ts"
   ],
   "scripts": {
     "build": "rm -rf lib && npx tsc"
