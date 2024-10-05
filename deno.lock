@@ -1,0 +1,34 @@
+{
+  "version": "3",
+  "packages": {
+    "specifiers": {
+      "jsr:@vef/easy-cli@^0.2.6": "jsr:@vef/easy-cli@0.2.6",
+      "jsr:@vef/easy-orm@^0.3.12": "jsr:@vef/easy-orm@0.3.12",
+      "jsr:@vef/string-utils@^0.1.5": "jsr:@vef/string-utils@0.1.5"
+    },
+    "jsr": {
+      "@vef/easy-cli@0.2.6": {
+        "integrity": "f63c51de3a2ce7f478518f0e338a57e6b69184a027764fa5ca247cd1b2975a06",
+        "dependencies": [
+          "jsr:@vef/string-utils@^0.1.5"
+        ]
+      },
+      "@vef/easy-orm@0.3.12": {
+        "integrity": "7382d22d56fb94a978ad505fbafe027176e494ad4aad3107203f46ae724ede5c",
+        "dependencies": [
+          "jsr:@vef/easy-cli@^0.2.6",
+          "jsr:@vef/string-utils@^0.1.5"
+        ]
+      },
+      "@vef/string-utils@0.1.5": {
+        "integrity": "096b078f9b75b202fdc58c50fcd80d2c3e0f951540bf5f808d20b721d3d8b4cf"
+      }
+    }
+  },
+  "remote": {},
+  "workspace": {
+    "dependencies": [
+      "jsr:@vef/easy-orm@^0.3.12"
+    ]
+  }
+}

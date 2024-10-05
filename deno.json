@@ -1,6 +1,6 @@
 {
   "name": "@vef/easy-api",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "exports": "./mod.ts",
   "tasks": {
     "check": "deno publish --dry-run",
@@ -10,5 +10,8 @@
     "exclude": [
       ".github"
     ]
+  },
+  "imports": {
+    "@vef/easy-orm": "jsr:@vef/easy-orm@^0.3.12"
   }
 }
