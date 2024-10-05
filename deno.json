@@ -1,0 +1,8 @@
+{
+  "name": "@vef/easy-api",
+  "version": "0.2.0",
+  "exports": "./mod.ts",
+  "tasks": {
+    "check": "deno publish --dry-run"
+  }
+}
