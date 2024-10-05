@@ -3,6 +3,7 @@
   "version": "0.2.0",
   "exports": "./mod.ts",
   "tasks": {
-    "check": "deno publish --dry-run"
+    "check": "deno publish --dry-run",
+    "publish": "deno publish"
   }
 }
