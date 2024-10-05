@@ -5,5 +5,10 @@
   "tasks": {
     "check": "deno publish --dry-run",
     "publish": "deno publish"
+  },
+  "publish": {
+    "exclude": [
+      ".github"
+    ]
   }
 }
