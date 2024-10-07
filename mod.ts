@@ -1,7 +1,6 @@
 export { EasyApi } from "./src/easyApi.ts";
 import type {
   AdvancedFilter,
-  Choice,
   DocsAction,
   DocsActionGroup,
   DocsActionParam,
@@ -29,7 +28,6 @@ import type {
 
 export type {
   AdvancedFilter,
-  Choice,
   DocsAction,
   DocsActionGroup,
   DocsActionParam,

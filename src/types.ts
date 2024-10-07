@@ -137,23 +137,6 @@ export interface RichText {
 }
 
 /**
- * The choice definition for a field that's set to `ChoicesField` or `MultiChoiceField`.
- */
-export interface Choice {
-  key: string;
-  label: string;
-  color?:
-    | "primary"
-    | "secondary"
-    | "success"
-    | "error"
-    | "warning"
-    | "info"
-    | "accent"
-    | "muted";
-}
-
-/**
  * The connected entity definition for a field that's set to `ConnectionField`.
  */
 
