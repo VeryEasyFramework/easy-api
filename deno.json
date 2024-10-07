@@ -1,6 +1,6 @@
 {
   "name": "@vef/easy-api",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "exports": {
     ".": "./mod.ts",
     "./api": "./src/easyApi.ts",
@@ -12,6 +12,12 @@
   "publish": {
     "exclude": [
       ".github"
+    ],
+    "include": [
+      "mod.ts",
+      "src",
+      "LICENSE",
+      "README.md"
     ]
   },
   "imports": {
