@@ -3,18 +3,23 @@ import type {
   EasyField,
   EasyFieldType,
   EntityDefinition,
-  EntityRecord,
   FieldGroup,
   ListOptions,
   RowsResult,
 } from "@vef/easy-orm";
+
+export interface EntityRecord {
+  id: string;
+  createdAt: number;
+  updatedAt: number;
+  [key: string]: any;
+}
 
 export type {
   AdvancedFilter,
   EasyField,
   EasyFieldType,
   EntityDefinition,
-  EntityRecord,
   FieldGroup,
   ListOptions,
   RowsResult,
