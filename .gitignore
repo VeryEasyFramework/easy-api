@@ -1,7 +1,4 @@
 .vscode
-node_modules
-package-lock.json
 lib
-*.js
-*.d.ts
 .idea
+deno.lock
