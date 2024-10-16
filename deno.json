@@ -1,7 +1,11 @@
 {
   "name": "@vef/easy-api",
-  "version": "0.2.11",
-  "exports": "./mod.ts",
+  "version": "0.2.12",
+  "exports": {
+    ".": "./mod.ts",
+    "./mod.ts": "./mod.ts"
+  },
+
   "tasks": {
     "check": "deno publish --dry-run"
   },
@@ -10,5 +14,5 @@
       ".github"
     ]
   },
-  "imports": { "@vef/types": "jsr:@vef/types@^0.1.4" }
+  "imports": { "@vef/types": "jsr:@vef/types@^0.1.5" }
 }
