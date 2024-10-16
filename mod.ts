@@ -13,6 +13,7 @@ interface ErrorInfo {
 
 export interface EasyApi {
   host: string;
+  headers: Record<string, string>;
   call<T extends Record<string, any>>(
     group: string,
     action: string,
@@ -53,6 +54,7 @@ export interface EasyApi {
 
 export class EasyApi implements EasyApi {
   host: string;
+  headers: Record<string, string> = {};
   private notify: (
     info: { message: string; title: string; type: string },
   ) => void = (info) => {
@@ -74,6 +76,7 @@ export class EasyApi implements EasyApi {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
+        ...this.headers,
       },
       body: JSON.stringify(data),
     }).catch((e) => {
