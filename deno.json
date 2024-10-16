@@ -1,28 +1,14 @@
 {
   "name": "@vef/easy-api",
-  "version": "0.2.6",
-  "exports": {
-    ".": "./mod.ts",
-    "./api": "./src/easyApi.ts",
-    "./types": "./src/types.ts",
-    "./src/types.ts": "./src/types.ts",
-    "./src/easyApi.ts": "./src/easyApi.ts"
-  },
+  "version": "0.2.7",
+  "exports": "./mod.ts",
   "tasks": {
     "check": "deno publish --dry-run"
   },
   "publish": {
     "exclude": [
       ".github"
-    ],
-    "include": [
-      "mod.ts",
-      "src",
-      "LICENSE",
-      "README.md"
     ]
   },
-  "imports": {
-    "@vef/easy-orm": "jsr:@vef/easy-orm@^0.3.12"
-  }
+  "imports": { "@vef/types": "jsr:@vef/types@^0.1.2" }
 }

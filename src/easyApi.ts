@@ -1,5 +1,9 @@
-import type { EntityRecord, ListOptions, RowsResult } from "@vef/easy-orm";
-import type { UserSession } from "./types.ts";
+import type {
+  EntityRecord,
+  GetListResult,
+  ListOptions,
+  UserSession,
+} from "@vef/types";
 export interface ErrorInfo {
   statusCode: number;
   message: string;
@@ -16,7 +20,7 @@ export interface EasyApi {
   getList<T extends EntityRecord = EntityRecord>(
     entity: string,
     options?: ListOptions,
-  ): Promise<RowsResult<T>>;
+  ): Promise<GetListResult<T>>;
   createEntity<T extends EntityRecord = EntityRecord>(
     entity: string,
     data: Record<string, any>,
@@ -105,12 +109,12 @@ export class EasyApi implements EasyApi {
   async getList<T extends EntityRecord = EntityRecord>(
     entity: string,
     options?: ListOptions,
-  ): Promise<RowsResult<T>> {
+  ): Promise<GetListResult<T>> {
     const fullOptions = {
       ...options,
       entity,
     };
-    return await this.call<RowsResult<T>>("entity", "getList", fullOptions);
+    return await this.call<GetListResult<T>>("entity", "getList", fullOptions);
   }
 
   async createEntity<T extends EntityRecord = EntityRecord>(
