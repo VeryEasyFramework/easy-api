@@ -11,47 +11,47 @@ interface ErrorInfo {
   title?: string;
 }
 
-// export interface EasyApi {
-//   host: string;
-//   call<T extends Record<string, any>>(
-//     group: string,
-//     action: string,
-//     data?: Record<string, any>,
-//   ): Promise<T>;
-//   getList<T extends EntityRecord = EntityRecord>(
-//     entity: string,
-//     options?: ListOptions,
-//   ): Promise<GetListResult<T>>;
-//   createEntity<T extends EntityRecord = EntityRecord>(
-//     entity: string,
-//     data: Record<string, any>,
-//   ): Promise<T>;
-//   getEntity<T extends EntityRecord = EntityRecord>(
-//     entity: string,
-//     id: string,
-//   ): Promise<T>;
-//   getRecordInfo(entity: string, id: string): Promise<any>;
-//   updateEntity<T extends EntityRecord = EntityRecord>(
-//     entity: string,
-//     id: string,
-//     data: Record<string, any>,
-//   ): Promise<T>;
-//   deleteEntity(entity: string, id: string): Promise<void>;
-//   runEntityAction(
-//     entity: string,
-//     id: string,
-//     action: string,
-//     data?: Record<string, any>,
-//   ): Promise<any>;
-//   login(email: string, password: string): Promise<UserSession>;
-//   logout(): Promise<void>;
-//   authCheck(): Promise<UserSession>;
-//   onNotify(
-//     callback: (info: { message: string; title: string; type: string }) => void,
-//   ): void;
-// }
+export interface EasyApi {
+  host: string;
+  call<T extends Record<string, any>>(
+    group: string,
+    action: string,
+    data?: Record<string, any>,
+  ): Promise<T>;
+  getList<T extends EntityRecord = EntityRecord>(
+    entity: string,
+    options?: ListOptions,
+  ): Promise<GetListResult<T>>;
+  createEntity<T extends EntityRecord = EntityRecord>(
+    entity: string,
+    data: Record<string, any>,
+  ): Promise<T>;
+  getEntity<T extends EntityRecord = EntityRecord>(
+    entity: string,
+    id: string,
+  ): Promise<T>;
+  getRecordInfo(entity: string, id: string): Promise<RecordInfo>;
+  updateEntity<T extends EntityRecord = EntityRecord>(
+    entity: string,
+    id: string,
+    data: Record<string, any>,
+  ): Promise<T>;
+  deleteEntity(entity: string, id: string): Promise<void>;
+  runEntityAction(
+    entity: string,
+    id: string,
+    action: string,
+    data?: Record<string, any>,
+  ): Promise<any>;
+  login(email: string, password: string): Promise<UserSession>;
+  logout(): Promise<void>;
+  authCheck(): Promise<UserSession>;
+  onNotify(
+    callback: (info: { message: string; title: string; type: string }) => void,
+  ): void;
+}
 
-export class EasyApi {
+export class EasyApi implements EasyApi {
   host: string;
   private notify: (
     info: { message: string; title: string; type: string },
