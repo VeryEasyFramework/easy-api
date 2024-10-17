@@ -201,31 +201,31 @@ export class EasyApi implements EasyApi {
   }
 }
 
-
 export interface SocketRoom {
   roomName: string;
   events: string[];
 }
 
-export  type SocketStatus = "open" | "closed" | "connecting" | "error";
+export type SocketStatus = "open" | "closed" | "connecting" | "error";
 
 export class RealtimeClient {
   private socket!: WebSocket;
   private readonly host: string;
   private rooms: { name: string; events: string[] }[] = [];
-  private messageListeners: ((room: string, event: string, data: any) => void)[] = [];
+  private messageListeners:
+    ((room: string, event: string, data: any) => void)[] = [];
   private statusListeners: ((status: SocketStatus) => void)[] = [];
   private manualClose = false;
 
-  get connected():boolean {
+  get connected(): boolean {
     return this.socket?.readyState === WebSocket.OPEN;
   }
 
-  get connecting():boolean {
+  get connecting(): boolean {
     return this.socket?.readyState === WebSocket.CONNECTING;
   }
 
-  get closed() :boolean {
+  get closed(): boolean {
     return this.socket?.readyState === WebSocket.CLOSED;
   }
 
@@ -234,27 +234,32 @@ export class RealtimeClient {
     this.host = host || `${protocol}://${globalThis.location.host}/ws`;
   }
 
-
-  onMessage(callback: (room: string, event: string, data: Record<string, any>) => void):void {
+  onMessage(
+    callback: (room: string, event: string, data: Record<string, any>) => void,
+  ): void {
     if (this.messageListeners.includes(callback)) {
       return;
     }
     this.messageListeners.push(callback);
   }
 
-  removeMessageListener(callback: (room: string, event: string, data: Record<string, any>) => void):void {
-    this.messageListeners = this.messageListeners.filter((cb) => cb !== callback);
+  removeMessageListener(
+    callback: (room: string, event: string, data: Record<string, any>) => void,
+  ): void {
+    this.messageListeners = this.messageListeners.filter((cb) =>
+      cb !== callback
+    );
   }
 
-  onStatusChange(callback: (status: SocketStatus) => void):void {
+  onStatusChange(callback: (status: SocketStatus) => void): void {
     this.statusListeners.push(callback);
   }
 
-  removeStatusListener(callback: (status: SocketStatus) => void):void {
+  removeStatusListener(callback: (status: SocketStatus) => void): void {
     this.statusListeners = this.statusListeners.filter((cb) => cb !== callback);
   }
 
-  connect():void {
+  connect(): void {
     this.socket = new WebSocket(this.host);
     this.manualClose = false;
     this.notifyStatus("connecting");
@@ -268,18 +273,15 @@ export class RealtimeClient {
         }
       });
       this.socket.addEventListener("message", (event) => {
-
         let data;
         try {
-
           data = JSON.parse(event.data);
         } catch (_e) {
           data = {
-            data: event.data
-          }
+            data: event.data,
+          };
         }
-        if ('room' in data && 'event' in data && 'data' in data) {
-
+        if ("room" in data && "event" in data && "data" in data) {
           for (const listener of this.messageListeners) {
             listener(data.room, data.event, data.data);
           }
@@ -292,13 +294,13 @@ export class RealtimeClient {
     });
   }
 
-  private notifyStatus(status: SocketStatus):void {
+  private notifyStatus(status: SocketStatus): void {
     for (const listener of this.statusListeners) {
       listener(status);
     }
   }
 
-  private retryReconnect(attempts: number):void {
+  private retryReconnect(attempts: number): void {
     let count = 0;
     const interval = setInterval(() => {
       if (count >= attempts) {
@@ -323,25 +325,27 @@ export class RealtimeClient {
     }
   }
 
-  private rejoinRooms():void {
+  private rejoinRooms(): void {
     for (const room of this.rooms) {
       if (room.events.length === 0) {
-        this.send({type: "join", room: room.name});
+        this.send({ type: "join", room: room.name });
         return;
       }
       for (const event of room.events) {
-        this.send({type: "join", room: room.name, event});
+        this.send({ type: "join", room: room.name, event });
       }
     }
   }
 
+  join(room: string, event?: string): void {
+    let existingRoom = this.rooms.find((r) => r.name === room);
 
-  join(room: string, event: string):void {
+    if (!existingRoom) {
+      this.rooms.push({ name: room, events: [] });
+      existingRoom = this.rooms.find((r) => r.name === room)!;
+    }
 
-
-    if (!this.rooms.find((r) => r.name === room)) {
-      this.rooms.push({name: room, events: [event]});
-    } else {
+    if (event && !existingRoom.events.includes(event)) {
       this.rooms = this.rooms.map((r) => {
         if (r.name === room) {
           r.events.push(event);
@@ -349,10 +353,11 @@ export class RealtimeClient {
         return r;
       });
     }
-    this.send({type: "join", room, event});
+
+    this.send({ type: "join", room, event });
   }
 
-  leave(room: string, event?: string):void {
+  leave(room: string, event?: string): void {
     if (event) {
       this.rooms = this.rooms.map((r) => {
         if (r.name === room) {
@@ -363,7 +368,7 @@ export class RealtimeClient {
     } else {
       this.rooms = this.rooms.filter((r) => r.name !== room);
     }
-    this.send({type: "leave", room, event});
+    this.send({ type: "leave", room, event });
   }
 
   disconnect() {
@@ -371,7 +376,7 @@ export class RealtimeClient {
     this.socket.close();
   }
 
-  private send(message: Record<string, any>):void {
+  private send(message: Record<string, any>): void {
     if (!this.connected) {
       return;
     }
