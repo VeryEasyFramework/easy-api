@@ -212,7 +212,7 @@ export class RealtimeClient {
   private socket!: WebSocket;
   private readonly host: string;
 
-  private token?: string;
+  private authToken?: string;
   private rooms: { name: string; events: string[] }[] = [];
   private messageListeners:
     ((room: string, event: string, data: any) => void)[] = [];
@@ -221,8 +221,8 @@ export class RealtimeClient {
 
   get endpoint(): string {
     let url = this.host;
-    if (this.token) {
-      url += `?token=${this.token}`;
+    if (this.authToken) {
+      url += `?authToken=${this.authToken}`;
     }
     return url;
   }
@@ -268,9 +268,9 @@ export class RealtimeClient {
     this.statusListeners = this.statusListeners.filter((cb) => cb !== callback);
   }
 
-  connect(token?: string): void {
-    if (token) {
-      this.token = token;
+  connect(authToken?: string): void {
+    if (authToken) {
+      this.authToken = authToken;
     }
     this.socket = new WebSocket(this.endpoint);
     this.manualClose = false;
