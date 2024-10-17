@@ -1,6 +1,6 @@
 {
   "name": "@vef/easy-api",
-  "version": "0.2.13",
+  "version": "0.2.14",
   "exports": {
     ".": "./mod.ts",
     "./mod.ts": "./mod.ts"
@@ -8,6 +8,11 @@
 
   "tasks": {
     "check": "deno publish --dry-run"
+  },
+  "lint": {
+    "rules": {
+      "exclude": ["no-explicit-any"]
+    }
   },
   "publish": {
     "exclude": [

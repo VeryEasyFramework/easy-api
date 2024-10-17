@@ -89,7 +89,7 @@ export class EasyApi implements EasyApi {
     });
     if (!response.ok) {
       if (response.status === 302) {
-        window.location.href = response.headers.get("Location") || "/";
+        globalThis.location.href = response.headers.get("Location") || "/";
       }
 
       const content = await response.text();
@@ -217,51 +217,51 @@ export class RealtimeClient {
   private statusListeners: ((status: SocketStatus) => void)[] = [];
   private manualClose = false;
 
-  get connected() {
+  get connected():boolean {
     return this.socket?.readyState === WebSocket.OPEN;
   }
 
-  get connecting() {
+  get connecting():boolean {
     return this.socket?.readyState === WebSocket.CONNECTING;
   }
 
-  get closed() {
+  get closed() :boolean {
     return this.socket?.readyState === WebSocket.CLOSED;
   }
 
   constructor(host?: string) {
-    const protocol = window.location.protocol === "https:" ? "wss" : "ws";
-    this.host = host || `${protocol}://${window.location.host}/ws`;
+    const protocol = globalThis.location.protocol === "https:" ? "wss" : "ws";
+    this.host = host || `${protocol}://${globalThis.location.host}/ws`;
   }
 
 
-  onMessage(callback: (room: string, event: string, data: Record<string, any>) => void) {
+  onMessage(callback: (room: string, event: string, data: Record<string, any>) => void):void {
     if (this.messageListeners.includes(callback)) {
       return;
     }
     this.messageListeners.push(callback);
   }
 
-  removeMessageListener(callback: (room: string, event: string, data: Record<string, any>) => void) {
+  removeMessageListener(callback: (room: string, event: string, data: Record<string, any>) => void):void {
     this.messageListeners = this.messageListeners.filter((cb) => cb !== callback);
   }
 
-  onStatusChange(callback: (status: SocketStatus) => void) {
+  onStatusChange(callback: (status: SocketStatus) => void):void {
     this.statusListeners.push(callback);
   }
 
-  removeStatusListener(callback: (status: SocketStatus) => void) {
+  removeStatusListener(callback: (status: SocketStatus) => void):void {
     this.statusListeners = this.statusListeners.filter((cb) => cb !== callback);
   }
 
-  connect() {
+  connect():void {
     this.socket = new WebSocket(this.host);
     this.manualClose = false;
     this.notifyStatus("connecting");
-    this.socket.addEventListener("open", (event) => {
+    this.socket.addEventListener("open", (_event) => {
       this.notifyStatus("open");
       this.rejoinRooms();
-      this.socket.addEventListener("close", async (event) => {
+      this.socket.addEventListener("close", (_event) => {
         this.notifyStatus("closed");
         if (!this.manualClose) {
           this.retryReconnect(1000);
@@ -273,7 +273,7 @@ export class RealtimeClient {
         try {
 
           data = JSON.parse(event.data);
-        } catch (e) {
+        } catch (_e) {
           data = {
             data: event.data
           }
@@ -286,19 +286,19 @@ export class RealtimeClient {
         }
       });
     });
-    this.socket.addEventListener("error", (event) => {
+    this.socket.addEventListener("error", (_event) => {
       this.notifyStatus("error");
       // console.log("socket error", event);
     });
   }
 
-  private notifyStatus(status: SocketStatus) {
+  private notifyStatus(status: SocketStatus):void {
     for (const listener of this.statusListeners) {
       listener(status);
     }
   }
 
-  private retryReconnect(attempts: number) {
+  private retryReconnect(attempts: number):void {
     let count = 0;
     const interval = setInterval(() => {
       if (count >= attempts) {
@@ -323,7 +323,7 @@ export class RealtimeClient {
     }
   }
 
-  private rejoinRooms() {
+  private rejoinRooms():void {
     for (const room of this.rooms) {
       if (room.events.length === 0) {
         this.send({type: "join", room: room.name});
@@ -336,7 +336,7 @@ export class RealtimeClient {
   }
 
 
-  join(room: string, event: string) {
+  join(room: string, event: string):void {
 
 
     if (!this.rooms.find((r) => r.name === room)) {
@@ -352,7 +352,7 @@ export class RealtimeClient {
     this.send({type: "join", room, event});
   }
 
-  leave(room: string, event?: string) {
+  leave(room: string, event?: string):void {
     if (event) {
       this.rooms = this.rooms.map((r) => {
         if (r.name === room) {
@@ -371,7 +371,7 @@ export class RealtimeClient {
     this.socket.close();
   }
 
-  private send(message: Record<string, any>) {
+  private send(message: Record<string, any>):void {
     if (!this.connected) {
       return;
     }
