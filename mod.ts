@@ -211,12 +211,21 @@ export type SocketStatus = "open" | "closed" | "connecting" | "error";
 export class RealtimeClient {
   private socket!: WebSocket;
   private readonly host: string;
+
+  private token?: string;
   private rooms: { name: string; events: string[] }[] = [];
   private messageListeners:
     ((room: string, event: string, data: any) => void)[] = [];
   private statusListeners: ((status: SocketStatus) => void)[] = [];
   private manualClose = false;
 
+  get endpoint(): string {
+    let url = this.host;
+    if (this.token) {
+      url += `?token=${this.token}`;
+    }
+    return url;
+  }
   get connected(): boolean {
     return this.socket?.readyState === WebSocket.OPEN;
   }
@@ -259,8 +268,11 @@ export class RealtimeClient {
     this.statusListeners = this.statusListeners.filter((cb) => cb !== callback);
   }
 
-  connect(): void {
-    this.socket = new WebSocket(this.host);
+  connect(token?: string): void {
+    if (token) {
+      this.token = token;
+    }
+    this.socket = new WebSocket(this.endpoint);
     this.manualClose = false;
     this.notifyStatus("connecting");
     this.socket.addEventListener("open", (_event) => {
