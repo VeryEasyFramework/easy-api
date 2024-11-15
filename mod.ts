@@ -1,8 +1,8 @@
 import type {
-  EntityRecord,
+  Entry,
+  EntryInfo,
   GetListResult,
   ListOptions,
-  RecordInfo,
   UserSession,
 } from "@vef/types";
 interface ErrorInfo {
@@ -19,27 +19,27 @@ export interface EasyApi {
     action: string,
     data?: Record<string, any>,
   ): Promise<T>;
-  getList<T extends EntityRecord = EntityRecord>(
-    entity: string,
+  getList<T extends Entry = Entry>(
+    entryType: string,
     options?: ListOptions,
   ): Promise<GetListResult<T>>;
-  createEntity<T extends EntityRecord = EntityRecord>(
-    entity: string,
+  createEntry<T extends Entry = Entry>(
+    entryType: string,
     data: Record<string, any>,
   ): Promise<T>;
-  getEntity<T extends EntityRecord = EntityRecord>(
-    entity: string,
+  getEntry<T extends Entry = Entry>(
+    entryType: string,
     id: string,
   ): Promise<T>;
-  getRecordInfo(entity: string, id: string): Promise<RecordInfo>;
-  updateEntity<T extends EntityRecord = EntityRecord>(
-    entity: string,
+  getEntryInfo(entryType: string, id: string): Promise<EntryInfo>;
+  updateEntry<T extends Entry = Entry>(
+    entryType: string,
     id: string,
     data: Record<string, any>,
   ): Promise<T>;
-  deleteEntity(entity: string, id: string): Promise<void>;
-  runEntityAction(
-    entity: string,
+  deleteEntry(entryType: string, id: string): Promise<void>;
+  runEntryAction(
+    entryType: string,
     id: string,
     action: string,
     data?: Record<string, any>,
@@ -110,55 +110,59 @@ export class EasyApi implements EasyApi {
     return await response.json();
   }
 
-  async getList<T extends EntityRecord = EntityRecord>(
-    entity: string,
+  async getList<T extends Entry = Entry>(
+    entryType: string,
     options?: ListOptions,
   ): Promise<GetListResult<T>> {
     const fullOptions = {
       ...options,
-      entity,
+      entryType,
     };
-    return await this.call<GetListResult<T>>("entity", "getList", fullOptions);
+    return await this.call<GetListResult<T>>("entry", "getList", fullOptions);
   }
 
-  async createEntity<T extends EntityRecord = EntityRecord>(
-    entity: string,
+  async createEntry<T extends Entry = Entry>(
+    entryType: string,
     data: Record<string, any>,
   ): Promise<T> {
-    return await this.call<T>("entity", "createEntity", { entity, data });
+    return await this.call<T>("entry", "createEntry", { entryType, data });
   }
 
-  async getEntity<T extends EntityRecord = EntityRecord>(
-    entity: string,
+  async getEntry<T extends Entry = Entry>(
+    entryType: string,
     id: string,
   ): Promise<T> {
-    return await this.call<T>("entity", "getEntity", { entity, id });
+    return await this.call<T>("entry", "getEntry", { entryType, id });
   }
 
-  async getRecordInfo(entity: string, id: string): Promise<RecordInfo> {
-    return await this.call("entity", "getRecordInfo", { entity, id });
+  async getEntryInfo(entryType: string, id: string): Promise<EntryInfo> {
+    return await this.call("entry", "getEntryInfo", { entryType, id });
   }
 
-  async updateEntity<T extends EntityRecord = EntityRecord>(
-    entity: string,
+  async updateEntry<T extends Entry = Entry>(
+    entryType: string,
     id: string,
     data: Record<string, any>,
   ): Promise<T> {
-    return await this.call<T>("entity", "updateEntity", { entity, id, data });
+    return await this.call<T>("entry", "updateEntry", {
+      entryType,
+      id,
+      data,
+    });
   }
 
-  async deleteEntity(entity: string, id: string): Promise<void> {
-    await this.call("entity", "deleteEntity", { entity, id });
+  async deleteEntry(entryType: string, id: string): Promise<void> {
+    await this.call("entry", "deleteEntry", { entryType, id });
   }
 
-  async runEntityAction(
-    entity: string,
+  async runEntryAction(
+    entryType: string,
     id: string,
     action: string,
     data?: Record<string, any>,
   ): Promise<any> {
-    return await this.call("entity", "runEntityAction", {
-      entity,
+    return await this.call("entry", "runEntryAction", {
+      entryType,
       id,
       action,
       data,
