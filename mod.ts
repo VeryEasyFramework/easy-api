@@ -130,18 +130,21 @@ export class EasyApi implements EasyApi {
 
   async getEntry<T extends Entry = Entry>(
     entryType: string,
-    id: string,
+    id: string | number,
   ): Promise<T> {
     return await this.call<T>("entry", "getEntry", { entryType, id });
   }
 
-  async getEntryInfo(entryType: string, id: string): Promise<EntryInfo> {
+  async getEntryInfo(
+    entryType: string,
+    id: string | number,
+  ): Promise<EntryInfo> {
     return await this.call("entry", "getEntryInfo", { entryType, id });
   }
 
   async updateEntry<T extends Entry = Entry>(
     entryType: string,
-    id: string,
+    id: string | number,
     data: Record<string, any>,
   ): Promise<T> {
     return await this.call<T>("entry", "updateEntry", {
@@ -151,13 +154,13 @@ export class EasyApi implements EasyApi {
     });
   }
 
-  async deleteEntry(entryType: string, id: string): Promise<void> {
+  async deleteEntry(entryType: string, id: string | number): Promise<void> {
     await this.call("entry", "deleteEntry", { entryType, id });
   }
 
   async runEntryAction(
     entryType: string,
-    id: string,
+    id: string | number,
     action: string,
     data?: Record<string, any>,
   ): Promise<any> {
