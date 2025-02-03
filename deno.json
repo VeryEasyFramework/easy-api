@@ -1,6 +1,6 @@
 {
   "name": "@vef/easy-api",
-  "version": "0.2.19",
+  "version": "0.2.20",
   "exports": {
     ".": "./mod.ts",
     "./mod.ts": "./mod.ts"
@@ -20,6 +20,6 @@
     ]
   },
   "imports": {
-    "@vef/types": "jsr:@vef/types@^0.1.18"
+    "@vef/types": "jsr:@vef/types@^0.1.36"
   }
 }
